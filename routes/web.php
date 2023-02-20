@@ -46,3 +46,31 @@ route::get('/',[AboutController::class, 'index']);
 
 route::get('/',[ArticleController::class, 'index']);
 
+//Praktikum 3
+route::get('/home/{nama}',function($nama){
+    echo "Selamat datang ";
+    return $nama;
+});
+
+Route::prefix('product')->group(function () {
+    Route::get('/list', [PageController::class, 'product']);
+});
+
+route::get('user/{id}',function($id){
+    echo "Daftar Berita : <br>
+    <ul>
+    
+    <li><a href='https://www.educastudio.com/news'>Berita 1</a></li>
+    <li><a href='https://www.educastudio.com/news/educa-studio-berbagi-untuk-warga-sekitarterdampak-covid-19'>Berita 2</a></li>
+    </ul>";
+    return 'user'.$id;
+});
+
+Route::prefix('program')->group(function () {
+    Route::get('/list', [PageController::class, 'program']);
+});
+
+Route::get('/about', function (){
+    echo "<a href='https://www.educastudio.com/about-us '>Tentang Kami</a>";
+});
+Route::resource('contactUs', PageController::class);
