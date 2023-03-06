@@ -13,15 +13,9 @@ class PageController extends Controller
      */
     public function index()
     {
-        return 'LAMAN KONTAK KAMI <br>
-        <ul>
-            <li> WHATSAPP : 085804451068 </li>
-            <li> EMAIL : tesyaeriana00@gmail.com </li>
-        </ul>
-        <label>Kontak</label> <br>
-            <input placeholder="Masukkan kontak">
-            <button>Submit</button>
-        ';
+        return view('contactus', [
+            'no' => '085804451068',
+            'email' => 'tesyaeriana@polinema.ac.id']);
     }
     public function about()
     {
