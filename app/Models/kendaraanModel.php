@@ -11,5 +11,7 @@ class kendaraanModel extends Model
     use HasFactory;
 
     protected $table = 'kendaraan';
+    protected $primaryKey = 'nopol';
+    protected $keyType = 'string';
  
 }
