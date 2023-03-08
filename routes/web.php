@@ -13,6 +13,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\KuliahController;
+use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
@@ -109,5 +110,7 @@ Route::get('/kendaraan',[KendaraanController::class, 'index']);
 Route::get('/hobi',[HobiController::class,'index']);
 
 Route::get('keluarga',[KeluargaController::class,'index']);
+
+Route::get('/matakuliah',[MataKuliahController::class,'index']);
 
 
