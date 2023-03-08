@@ -8,7 +8,9 @@ use App\Http\Controllers\ControllerNews;
 use App\Http\Controllers\ControllerProduk;
 use App\Http\Controllers\ControllerProgram;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HobiController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\KuliahController;
 use App\Http\Controllers\PageController;
@@ -103,4 +105,9 @@ Route::get('/profile',[ProfileController::class, 'index']);
 Route::get('/kuliah',[KuliahController::class, 'index']);
 
 Route::get('/kendaraan',[KendaraanController::class, 'index']);
+
+Route::get('/hobi',[HobiController::class,'index']);
+
+Route::get('keluarga',[KeluargaController::class,'index']);
+
 
