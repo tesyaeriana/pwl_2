@@ -33,7 +33,7 @@
                                 <td>{{$m->hp}}</td>
                                 <td>
                                   <a href="{{url('/mahasiswas/'.$m->id.'/edit')}}" class="btn btn-sm btn-warning">edit</a>
-                                  <form method="POST" action="{{url('/mahasiswas/'.$m->id)}}">
+                                  <form method="POST" action="{{url('/mahasiswas/'.$m->id)}}" onsubmit="return confirm('Yakin hapus data?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
