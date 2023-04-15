@@ -1,16 +1,28 @@
 @extends ('layouts.tamplate')
 
 @section('content')
+
 <section class="content">
 
     <!-- Default Box-->
     <div class="card">
         <div class="card-header">
+            <div class="d-flex justify-content-between">
             <h3 class="card-title"> Data Mahasiswa </h3>
             <br>
+            </div>
         </div>
         <div class="card-body">
-          <a href="{{url('mahasiswas/create')}}" class="btn btn-sm btn-success my-2">Tambah Data</a>
+        <div class="row d-flex justify-between" style="width: 100%; justify-content: space-between; align-items: center; margin: 0">
+           
+                <a href="{{url('mahasiswas/create')}}" class="btn btn-sm btn-success my-2">Tambah Data</a>
+                <form action="{{url('cari')}}" method="GET" >
+                    <div class="form-group w-100 mb-3">
+                        <input type="text" name="cari" placeholder="Masukkan nim" id="cari" >
+                        <button type="submit">cari</button>
+                    </div>
+                </form>
+            </div>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -23,8 +35,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if($mhs->count() > 0)
-                        @foreach($mhs as $i => $m)
+                    @if($mahasiswas->count() > 0)
+                        @foreach($mahasiswas as $i => $m)
                             <tr>
                                 <td>{{$i++}}</td>
                                 <td>{{$m->nim}}</td>
@@ -48,7 +60,13 @@
                         </tr>
                     @endif
                 </tbody>
+               
+
             </table>
+            Halaman : {{ $mahasiswas->currentPage() }} <br/>
+            Jumlah Data : {{ $mahasiswas->total() }} <br/>
+          
+            {{ $mahasiswas->links() }}
         </div>
     </div>
 </section>

@@ -121,6 +121,8 @@ Route::middleware(['auth']) ->group(function(){
     Route::get('/keluarga',[KeluargaController::class,'index']);
     Route::get('/matakuliah',[MataKuliahController::class,'index']);
     Route::resource('/mahasiswas', MahasiswaController::class)->parameter('mahasiswas','id');
+    Route::get('cari',[MahasiswaController::class, 'cari']);
+    
     
 
 });

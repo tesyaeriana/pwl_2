@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
 use App\Models\MahasiswaModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MahasiswaController extends Controller
 {
@@ -15,9 +16,14 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $mhs = MahasiswaModel::all();
-        return view('mahasiswa.mahasiswas')
-            ->with('mhs',$mhs);
+       $mahasiswas = MahasiswaModel::paginate(5);
+       return view('mahasiswa.mahasiswas')->with('mahasiswas',$mahasiswas);
+    }
+    public function cari(Request $request){
+        $keyword = $request->cari;
+        $mahasiswas = MahasiswaModel::where('nim','like',"%".$keyword."%")->paginate(5);
+        return view('mahasiswa.mahasiswas',compact('mahasiswas'))->with('i',(request()->input('page',1)-1)*5);
+
     }
 
     /**
