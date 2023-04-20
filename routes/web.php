@@ -117,16 +117,14 @@ Route::middleware(['auth']) ->group(function(){
     Route::get('/profile',[ProfileController::class, 'index']);
     Route::get('/kuliah',[KuliahController::class, 'index']);
     Route::get('/kendaraan',[KendaraanController::class, 'index']);
-    Route::get('/hobi',[HobiController::class,'index']);
+    Route::resource('/hobi',HobiController::class)->parameter('hobi','id');;
     Route::get('/keluarga',[KeluargaController::class,'index']);
     Route::get('/matakuliah',[MataKuliahController::class,'index']);
     Route::resource('/mahasiswas', MahasiswaController::class)->parameter('mahasiswas','id');
     Route::get('cari',[MahasiswaController::class, 'cari']);
-    
+    Route::get('cariHobi',[HobiController::class, 'cari']);
     
 
 });
 
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
