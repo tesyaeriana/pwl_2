@@ -17,36 +17,41 @@ class MataKuliahSeeder extends Seeder
     {
         DB::table('mata_kuliah')->insert([
             [
-                'kodemk' => 'RTI213008',
-                'namaMatkul' => 'Praktikum Pemrograman Berbasis Objek',
-                'dosen' => 'Elok Nur Hamdana, S.T, M.T.',
-                'sks' => '3'
+                
+                'nama_matkul' => 'PBO',
+                'sks' => 3,
+                'jam' => 6,
+                'semester'=>'4'
             ],
             [
-                'kodemk' => 'RTI214008',
-                'namaMatkul' => 'Pemrograman Web Lanjut',
-                'dosen' => 'Moch. Zawaruddin Abdullah, S.ST., M.Kom.',
-                'sks' => '3'
+                'nama_matkul' => 'PWL',
+                'sks' => 3,
+                'jam' => 6,
+                'semester' => '4'
             ],
             [
-                'kodemk' => 'RTI214004',
-                'namaMatkul' => 'Proyek 1',
-                'dosen' => 'Farid Angga Pribadi, S.Kom., M.Kom.',
-                'sks' => '3'
+               
+                'nama_matkul' => 'Proyek 1',
+                'sks' => 3,
+                'jam' => 6,
+                'semester' => '4'
             ],
             [
-                'kodemk' => 'RTI214006',
-                'namaMatkul' => 'Jaringan Komputer',
-                'dosen' => 'Kadek Suarjuna Batubulan, S.Kom., M.T.',
-                'sks' => '2'
+                
+                'nama_matkul' => 'Jarkom',
+                'sks' => 2,
+                'jam' => 6,
+                'semester' => '4'
             ],
             [
-                'kodemk' => 'RTI214001',
-                'namaMatkul' => 'Kewarganegaraan',
-                'dosen' => 'Widaningsih, S.H., M.H.',
-                'sks' => '2'
+               
+                'nama_matkul' => 'KWN',
+                'sks' => 2,
+                'jam' => 6,
+                'semester' => '4'
             ]
             
         ]);
+       
     }
 }

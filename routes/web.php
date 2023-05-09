@@ -119,7 +119,7 @@ Route::middleware(['auth']) ->group(function(){
     Route::get('/kendaraan',[KendaraanController::class, 'index']);
     Route::resource('/hobi',HobiController::class)->parameter('hobi','id');;
     Route::get('/keluarga',[KeluargaController::class,'index']);
-    Route::get('/matakuliah',[MataKuliahController::class,'index']);
+    Route::resource('/matakuliah',MataKuliahController::class)->parameter('matakuliah','id');
     Route::resource('/mahasiswas', MahasiswaController::class)->parameter('mahasiswas','id');
     Route::get('cari',[MahasiswaController::class, 'cari']);
     Route::get('cariHobi',[HobiController::class, 'cari']);

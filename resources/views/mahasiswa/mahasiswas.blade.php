@@ -29,22 +29,25 @@
                         <th>No</th>
                         <th>Nim</th>
                         <th>Nama</th>
+                        <th>Kelas</th>
                         <th>Jenis Kelamin</th>
                         <th>No. HP</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if($mahasiswas->count() > 0)
-                        @foreach($mahasiswas as $i => $m)
+                    @if($mahasiswa->count() > 0)
+                        @foreach($mahasiswa as $i=>$m)
                             <tr>
                                 <td>{{$i++}}</td>
                                 <td>{{$m->nim}}</td>
                                 <td>{{$m->nama}}</td>
+                                <td>{{$m->kelas->nama_kelas}}</td>
                                 <td>{{$m->jk}}</td>
                                 <td>{{$m->hp}}</td>
                                 <td>
                                   <a href="{{url('/mahasiswas/'.$m->id.'/edit')}}" class="btn btn-sm btn-warning">edit</a>
+                                  <a href="{{url('/mahasiswas/'. $m->id)}}"class="btn btn-sm btn-primary">Show</a>
                                   <form method="POST" action="{{url('/mahasiswas/'.$m->id)}}" onsubmit="return confirm('Yakin hapus data?')">
                                     @csrf
                                     @method('DELETE')
@@ -63,10 +66,8 @@
                
 
             </table>
-            Halaman : {{ $mahasiswas->currentPage() }} <br/>
-            Jumlah Data : {{ $mahasiswas->total() }} <br/>
+           
           
-            {{ $mahasiswas->links() }}
         </div>
     </div>
 </section>
