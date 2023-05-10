@@ -37,7 +37,7 @@
             </tbody>
         </table>
     </div>
-    <a class="btn btn-success mt-3" href="{{ url('/mahasiswa') }}">Kembali</a>
+    <a class="btn btn-success mt-3" href="{{ url('/mahasiswas') }}">Kembali</a>
     </div>
     </div>
     </div>
