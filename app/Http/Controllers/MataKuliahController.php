@@ -15,7 +15,7 @@ class MataKuliahController extends Controller
     public function index()
     {
         
-        $matakuliah = mataKuliahModel::paginate(5);
+        $matakuliah = mataKuliahModel::all();
         return view('matakuliah.matakuliah')->with('matakuliah',$matakuliah);
     }
     

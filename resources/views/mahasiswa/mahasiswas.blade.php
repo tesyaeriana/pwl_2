@@ -48,12 +48,12 @@
                                 <td>
                                   <a href="{{url('/mahasiswas/'.$m->id.'/edit')}}" class="btn btn-sm btn-warning">edit</a>
                                   <a href="{{url('/mahasiswas/'. $m->id)}}"class="btn btn-sm btn-primary">Show</a>
-                                  <form method="POST" action="{{url('/mahasiswas/'.$m->id)}}" onsubmit="return confirm('Yakin hapus data?')">
+                                  <form class="d-inline-block" method="POST" action="{{url('/mahasiswas/'.$m->id)}}" onsubmit="return confirm('Yakin hapus data?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                 </form>
-                                 
+                                <a href="{{ url('/mahasiswas/nilai_mhs/'.$m->id) }}" class="btn btn-sm btn-info">Nilai</a>
                                 </td>
                             </tr>
                         @endforeach

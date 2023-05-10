@@ -19,6 +19,8 @@ use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
+use App\Models\mahasiswa_matakuliah;
+use App\Models\MahasiswaModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -123,6 +125,13 @@ Route::middleware(['auth']) ->group(function(){
     Route::resource('/mahasiswas', MahasiswaController::class)->parameter('mahasiswas','id');
     Route::get('cari',[MahasiswaController::class, 'cari']);
     Route::get('cariHobi',[HobiController::class, 'cari']);
+    Route::get('mahasiswas/nilai_mhs/{id}',function($id){
+        $mahasiswa = MahasiswaModel::find($id);
+        $khs = mahasiswa_matakuliah::where('id_mahasiswa',$id)->get();
+        return view('mahasiswa.nilai_mhs')
+        ->with('mahasiswa',$mahasiswa)
+        ->with('khs',$khs);
+    });
     
 
 });

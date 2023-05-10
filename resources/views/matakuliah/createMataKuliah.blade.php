@@ -13,31 +13,26 @@
           <form method="POST" action="{{$url_form }}">
             @csrf
             {!! (isset($mk))? method_field('PUT'):''!!}
+            
             <div class="form-group">
-              <label>kodemk</label>
-              <input class="form-control @error('kodemk') is-invalid @enderror" value="{{isset($mk)? $mk->kodemk : old('kodemk') }}" name="kodemk" type="text" />
-              @error('kodemk')
+              <label>nama_matkul</label>
+              <input class="form-control @error('nama_matkul') is-invalid @enderror" value="{{isset($mk)? $mk->nama_matkul : old('nama_matkul') }}" name="nama_matkul" type="text"/>
+              @error('nama_matkul')
                 <span class="error invalid-feedback">{{ $message }} </span>
               @enderror
             </div>
-            <div class="form-group">
-              <label>namaMatkul</label>
-              <input class="form-control @error('namaMatkul') is-invalid @enderror" value="{{isset($mk)? $mk->namaMatkul : old('namaMatkul') }}" name="namaMatkul" type="text"/>
-              @error('namaMatkul')
-                <span class="error invalid-feedback">{{ $message }} </span>
-              @enderror
-            </div>
-            <div class="form-group">
-              <label>dosen</label>
-              <input class="form-control @error('dosen') is-invalid @enderror" value="{{isset($mk)? $mk->dosen : old('dosen') }}" name="dosen" type="text"/>
-              @error('dosen')
-                <span class="error invalid-feedback">{{ $message }} </span>
-              @enderror
-            </div>
+          
             <div class="form-group">
               <label>sks</label>
               <input class="form-control @error('sks') is-invalid @enderror" value="{{isset($mk)? $mk->sks : old('sks') }}" name="sks" type="text"/>
               @error('sks')
+                <span class="error invalid-feedback">{{ $message }} </span>
+              @enderror
+            </div>
+            <div class="form-group">
+              <label>semester</label>
+              <input class="form-control @error('semester') is-invalid @enderror" value="{{isset($mk)? $mk->semester : old('semester') }}" name="semester" type="text"/>
+              @error('semester')
                 <span class="error invalid-feedback">{{ $message }} </span>
               @enderror
             </div>

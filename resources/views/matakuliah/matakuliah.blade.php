@@ -23,10 +23,9 @@
           <thead>
             <tr>
               <th>No</th>
-              <th>Kode MK</th>
               <th>Nama MK</th>
-              <th>Dosen Pengampu</th>
               <th>SKS</th>
+              <th>Semester</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -35,10 +34,9 @@
                         @foreach($matakuliah as $i => $m)
                             <tr>
                                 <td>{{$i++}}</td>
-                                <td>{{$m->kodemk}}</td>
-                                <td>{{$m->namaMatkul}}</td>
-                                <td>{{$m->dosen}}</td>
+                                <td>{{$m->nama_matkul}}</td>
                                 <td>{{$m->sks}}</td>
+                                <td>{{$m->semester}}</td>
                                 <td>
                                   <a href="{{url('/matakuliah/'.$m->id.'/edit')}}" class="btn btn-sm btn-warning">edit</a>
                                   <form method="POST" action="{{url('/matakuliah/'.$m->id)}}" onsubmit="return confirm('Yakin hapus data?')">
