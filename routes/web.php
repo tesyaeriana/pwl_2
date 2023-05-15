@@ -53,10 +53,6 @@ Route::middleware(['auth']) ->group(function(){
     Route::get('/about', function (){
         echo "NIM:2141720024 Nama:Tesya Eriana";
     });
-    Route::get('/articles/{id}', function ($id){
-      echo "Halaman Artikel dengan ID";
-      return $id;
-    });
     
     //Praktikum 2
     
@@ -64,14 +60,12 @@ Route::middleware(['auth']) ->group(function(){
     
     route::get('/about',[PageController::class, 'about']);
     
-    route::get('/articles/{id}',[PageController::class, 'articles']);
+
     
     //No3
     route::get('/',[HomeController::class, 'index']);
     
     route::get('/',[AboutController::class, 'index']);
-    
-    route::get('/',[ArticleController::class, 'index']);
     
     //Praktikum 3
     route::get('/home/{nama}',function($nama){
@@ -119,7 +113,7 @@ Route::middleware(['auth']) ->group(function(){
     Route::get('/profile',[ProfileController::class, 'index']);
     Route::get('/kuliah',[KuliahController::class, 'index']);
     Route::get('/kendaraan',[KendaraanController::class, 'index']);
-    Route::resource('/hobi',HobiController::class)->parameter('hobi','id');;
+    Route::resource('/hobi',HobiController::class)->parameter('hobi','id');
     Route::get('/keluarga',[KeluargaController::class,'index']);
     Route::resource('/matakuliah',MataKuliahController::class)->parameter('matakuliah','id');
     Route::resource('/mahasiswas', MahasiswaController::class)->parameter('mahasiswas','id');
@@ -132,7 +126,9 @@ Route::middleware(['auth']) ->group(function(){
         ->with('mahasiswa',$mahasiswa)
         ->with('khs',$khs);
     });
+    Route::resource('articles', ArticleController::class);
     
+    Route::get('/article/cetak_pdf',[ArticleController::class,'cetak_pdf']);
 
 });
 
