@@ -6,17 +6,10 @@
     <!--Default box-->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">DATA MAHASISWA</h3>
-
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widge="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widge="remove" title="Remove">
-                    <i class="fas fa-times"></i>
-                </button>
+            <h3 class="card-title">DATA MAHASISWA</h3><br><br><br>
+            <div class="text text-center">
+               <img width="150px" height="170px" src="{{asset('storage/'.$mahasiswa->foto)}}">
             </div>
-        </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><b>Nim : </b>{{$mahasiswa->nim}}</li>

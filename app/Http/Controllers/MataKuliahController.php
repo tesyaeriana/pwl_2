@@ -28,7 +28,7 @@ class MataKuliahController extends Controller
     public function create()
     {
         return view ('matakuliah.createMataKuliah')
-        ->with('url_form',url('/matakuliah'));
+        ->with('url_form',url('/mata_kuliah'));
     }
 
     /**
@@ -40,17 +40,18 @@ class MataKuliahController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kodemk'=>'required|string|max:10|unique:mata_kuliah,kodemk',
-            'namaMatkul'=>'required|string|max:50',
-            'dosen'=>'required|string|max:50',
-            'sks'=>'required|smallInteger',
+            
+            'nama_matkul'=>'required|string|max:50',
+            'sks'=>'required|integer',
+            'jam'=>'required|integer',
+            'semester'=>'required|integer',
             
 
             
         ]);
         $data = mataKuliahModel::create($request->except(['_token']));
 
-        return redirect('matakuliah')
+        return redirect('mata_kuliah')
             ->with('success','Mahasiswa berhasil ditambahkan');
     }
 
@@ -91,10 +92,10 @@ class MataKuliahController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kodemk'=>'required|string|max:10|unique:mata_kuliah,kodemk',
-            'namaMatkul'=>'required|string|max:50',
-            'dosen'=>'required|string|max:50',
-            'sks'=>'required|smallInteger',
+            'nama_matkul'=>'required|string|max:50',
+            'sks'=>'required|integer',
+            'jam'=>'required|integer',
+            'semester'=>'required|integer',
             
 
             

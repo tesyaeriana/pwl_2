@@ -16,11 +16,27 @@ class MahasiswaMatakuliahSeeder extends Seeder
     public function run()
     {
         DB::table('mahasiswa_matakuliah')->insert([
+            
+           // [
+             //   'id_mahasiswa' => '11',
+              //  'matkul_id' => '1',
+               // 'nilai' => 'A'
+            //]
             [
-                'id_mahasiswa' => '11',
-                'matkul_id' => '1',
+            'id_mahasiswa' => '15',
+              'matkul_id' => '4',
                 'nilai' => 'A'
-            ]
+            ],
+            [
+              'id_mahasiswa' => '15',
+                'matkul_id' => '2',
+                  'nilai' => 'A'
+            ],
+            [
+              'id_mahasiswa' => '15',
+                'matkul_id' => '3',
+                  'nilai' => 'A'
+              ]
            
         ]);
     }

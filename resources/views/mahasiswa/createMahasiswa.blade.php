@@ -10,7 +10,7 @@
             <br>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{$url_form }}">
+            <form method="POST" action="{{$url_form }}" enctype="multipart/form-data">
                 @csrf
                 {!! (isset($mhs))? method_field('PUT'):''!!}
                 <div class="form-group">
@@ -24,6 +24,13 @@
                   <label>Nama</label>
                   <input class="form-control @error('nama') is-invalid @enderror" value="{{isset($mhs)? $mhs->nama : old('nama') }}" name="nama" type="text"/>
                   @error('nama')
+                    <span class="error invalid-feedback">{{ $message }} </span>
+                  @enderror
+                </div>
+                <div class="form-group">
+                  <label>Foto</label>
+                  <input type="file" class="form-control" required="required" name="image">
+                  @error('foto')
                     <span class="error invalid-feedback">{{ $message }} </span>
                   @enderror
                 </div>
@@ -54,7 +61,7 @@
                 </div>
                 <div class="form-group">
                   <label>Tanggal Lahir</label>
-                  <input class="form-control @error('tanggal_lahir') is-invalid @enderror" value="{{isset($mhs)? $mhs->tanggal_lahir : old('tanggal_lahir') }}" name="tanggal_lahir" type="text"/>
+                  <input class="form-control @error('tanggal_lahir') is-invalid @enderror" value="{{isset($mhs)? $mhs->tanggal_lahir : old('tanggal_lahir') }}" name="tanggal_lahir" type="date"/>
                   @error('tanggal_lahir')
                     <span class="error invalid-feedback">{{ $message }} </span>
                   @enderror

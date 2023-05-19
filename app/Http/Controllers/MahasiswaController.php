@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use App\Models\Mahasiswa;
+use App\Models\mahasiswa_matakuliah;
 use App\Models\MahasiswaModel;
+
 use Database\Seeders\MahasiswaSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use PDF;
 class MahasiswaController extends Controller
 {
     /**
@@ -54,6 +56,7 @@ class MahasiswaController extends Controller
         $request->validate([
             'nim'=>'required|string|max:10|unique:mahasiswas,nim',
             'nama'=>'required|string|max:50',
+            'foto'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'kelas_id'=>'required',
             'jk'=>'required|in:l,p',
             'tempat_lahir'=>'required|string|max:50',
@@ -61,8 +64,21 @@ class MahasiswaController extends Controller
             'alamat'=>'required|string|max:255',
             'hp'=>'required|digits_between:6,15'
         ]);
-
-        MahasiswaModel::insert($request->except(['_token']));
+        $image_name=null;
+        if ($request->file('image')) {
+            $image_name = $request->file('image')->store('images','public');
+        }
+        MahasiswaModel::create([
+            'nim'=>$request->nim,
+            'nama'=>$request->nama,
+            'foto'=>$image_name,
+            'kelas_id'=>$request->kelas_id,
+            'jk'=>$request->jk,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'alamat' => $request->alamat,
+            'hp' => $request->hp,
+        ]);
 
         //$data = MahasiswaModel::create($request->except(['_token']));
 
@@ -79,7 +95,7 @@ class MahasiswaController extends Controller
     public function show($id)
     {
         $mahasiswa = MahasiswaModel::where('id',$id)->get();
-        return view('mahasiswa.show', ['Mahasiswa' => $mahasiswa[0]]);
+        return view('mahasiswa.show', ['mahasiswa' => $mahasiswa[0]]);
 
     }
 
@@ -98,12 +114,12 @@ class MahasiswaController extends Controller
            *  ->with('url_form',url('/mahasiswas/'. $id));
            
         */
-        $mahasiswa = MahasiswaModel::with('kelas')->where('id', $id)->first();
+        $mahasiswa = MahasiswaModel::find($id);
         $kelas = Kelas::all();
         return view('mahasiswa.createMahasiswa')
-        ->with('mhs',$mahasiswa)
-        ->with('kelas',$kelas)
-        ->with('url_form',url('/mahasiswas/'.$id));
+            ->with('mhs', $mahasiswa)
+            ->with('kelas', $kelas)
+            ->with('url_form', url('/mahasiswas/'.$id));
        
     }
 
@@ -119,6 +135,8 @@ class MahasiswaController extends Controller
         $request->validate([
             'nim' => 'required|string|max:10|unique:mahasiswas,nim,'.$id,
             'nama' =>'required|string|max:50',
+            'foto'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'kelas_id' => 'required',
             'jk' => 'required|in:L,P',
             'tempat_lahir' => 'required|string|max:50',
             'tanggal_lahir' => 'required|date',
@@ -126,7 +144,21 @@ class MahasiswaController extends Controller
             'hp' => 'required|digits_between:6,15',
         ]);
 
-        $data = MahasiswaModel::where('id', '=', $id)->update($request->except(['_token', '_method']));
+        $image_name=null;
+        if ($request->file('image')) {
+            $image_name = $request->file('image')->store('images','public');
+        }
+       MahasiswaModel::where('id',$id)->update([
+        'nim'=>$request->nim,
+        'nama'=>$request->nama,
+        'foto'=>$image_name,
+        'kelas_id'=>$request->kelas_id,
+        'jk'=>$request->jk,
+        'tempat_lahir' => $request->tempat_lahir,
+        'tanggal_lahir' => $request->tanggal_lahir,
+        'alamat' => $request->alamat,
+        'hp' => $request->hp,
+       ]);
         return redirect('mahasiswas')
             ->with('success', 'Mahasiswa Berhasil Ditambahkan');
 
@@ -143,5 +175,11 @@ class MahasiswaController extends Controller
         MahasiswaModel::where('id','=',$id)->delete();
         return redirect('mahasiswas')
         ->with('success','Mahasiswa Berhasil Dihapus');
+    }
+    public function cetak_pdf($id){
+       $mahasiswa = MahasiswaModel::find($id);
+       $khs = mahasiswa_matakuliah::where('id_mahasiswa',$id)->get();
+       $pdf = PDF::loadView('mahasiswa.cetak_pdf',['mahasiswa'=>$mahasiswa, 'khs'=>$khs]);
+       return $pdf->stream();
     }
 }
