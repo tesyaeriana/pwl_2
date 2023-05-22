@@ -180,6 +180,6 @@ class MahasiswaController extends Controller
        $mahasiswa = MahasiswaModel::find($id);
        $khs = mahasiswa_matakuliah::where('id_mahasiswa',$id)->get();
        $pdf = PDF::loadView('mahasiswa.cetak_pdf',['mahasiswa'=>$mahasiswa, 'khs'=>$khs]);
-       return $pdf->stream();
+       return $pdf->stream('invoice.pdf/personalpdf');
     }
 }

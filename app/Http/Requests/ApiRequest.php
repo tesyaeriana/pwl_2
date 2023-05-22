@@ -3,8 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Traits\ApiResponse;
-use Doctrine\Inflector\Rules\English\Rules;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Contracts\Validation\Validator ;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;

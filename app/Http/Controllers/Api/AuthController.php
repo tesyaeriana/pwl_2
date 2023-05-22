@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use App\Traits\ApiResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Client\Response as ClientResponse;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Response;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,6 +31,7 @@ class AuthController extends Controller
         ]);
     }
     public function register(RegisterRequest $request){
+       
         $validated = $request->validated();
         $user = User::create([
             'name'=>$validated['name'],

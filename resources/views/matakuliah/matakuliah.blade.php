@@ -25,6 +25,7 @@
               <th>No</th>
               <th>Nama MK</th>
               <th>SKS</th>
+              <th>Jam</th>
               <th>Semester</th>
               <th>Action</th>
             </tr>
@@ -36,6 +37,7 @@
                                 <td>{{$i++}}</td>
                                 <td>{{$m->nama_matkul}}</td>
                                 <td>{{$m->sks}}</td>
+                                <td>{{$m->jam}}</td>
                                 <td>{{$m->semester}}</td>
                                 <td>
                                   <a href="{{url('/matakuliah/'.$m->id.'/edit')}}" class="btn btn-sm btn-warning">edit</a>
@@ -65,9 +67,12 @@
   <!-- /.card -->
    </section>
    @push('js')
-   <!--<script>
+   <script>
     alert('Selamat Datang')
    </script>
+     <script>
+      alert('Selamat Datang')
+     </script>
        
    @endpush
    @endsection

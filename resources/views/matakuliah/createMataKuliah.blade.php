@@ -21,11 +21,17 @@
                 <span class="error invalid-feedback">{{ $message }} </span>
               @enderror
             </div>
-          
             <div class="form-group">
               <label>sks</label>
               <input class="form-control @error('sks') is-invalid @enderror" value="{{isset($mk)? $mk->sks : old('sks') }}" name="sks" type="text"/>
               @error('sks')
+                <span class="error invalid-feedback">{{ $message }} </span>
+              @enderror
+            </div>
+            <div class="form-group">
+              <label>jam</label>
+              <input class="form-control @error('jam') is-invalid @enderror" value="{{isset($mk)? $mk->jam: old('jam') }}" name="jam" type="text"/>
+              @error('jam')
                 <span class="error invalid-feedback">{{ $message }} </span>
               @enderror
             </div>
