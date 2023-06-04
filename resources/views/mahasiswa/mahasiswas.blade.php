@@ -74,7 +74,7 @@
         <div class="modal-dialog modal-">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Default Modal</h4>
+                    <h4 class="modal-title">Data Mahasiswa</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -115,7 +115,7 @@
         <div class="modal-dialog modal-">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Default Modal</h4>
+                    <h4 class="modal-title">Detail Mahasiswa</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -184,26 +184,29 @@
             }
         });
     }
-    function deleteData(element) {
-        if (!confirm("Are you sure?")) {
-            return false;
-        }
-        
-        $.ajax({
-            url: '{{  url('mahasiswas/delete') }}'+ '/' + element,
-            method: 'POST',
-            dataType: 'json',
-            data: {
-                "_token": "{{ csrf_token() }}",
-            },
-            success: function(data) {
-                alert(data.message);
-                location.reload();
-            },
-            error: function() {
-                alert('Error occurred while deleting data.');
-            }
+    function deleteData(th) {
+       var url = $(th).data('url');
+        var c = confirm('Apakah anda yakin ingin menghapus data ini?');
+        if(c==true){
+            $.ajax({
+                url: url,
+                method: "POST",
+                data: {
+                    _method: 'DELETE',
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function(data){
+                    if(data.status){
+                        alert(data.message);
+                        dataMahasiswa.ajax.reload();
+                    }else{
+                        alert(data.message);
+                    }
+                }
         });
+        }
+
     }
     $(document).ready(function (){
         var dataMahasiswa = $('#data_mahasiswa').DataTable({
@@ -224,34 +227,47 @@
                 render: function(data, type, row, meta){
                         var btn = `<button data-url="{{ url('/mahasiswas')}}/`+data+`" class="btn btn-xs btn-warning" onclick="updateData(this)" data-id="`+row.id+`" data-nim="`+row.nim+`" data-nama="`+row.nama+`" data-hp="`+row.hp+`"><i class="fa fa-edit"></i></button>` +
                         `<button href="{{ url('/mahasiswas/') }}/`+data+` " onclick="showData(`+data+`)" class="btn btn-xs btn-info"><i class="fa fa-list"></i></button>` +
-                                  `<button class="btn btn-xs btn-danger" onclick="deleteData(`+data+`)"><i class="fa fa-trash"></i> </button>`;
+                        `<button data-url="{{ url('/mahasiswas') }}/` + data + `" type="submit" class="btn btn-xs btn-danger" onclick="deleteData(this)"><i class="fa fa-trash"></i> </button>`;
                         return btn;
                     }
                 }
             ]
         });
     });
-    $('#form_mahasiswa').submit(function(e){
-            e.preventDefault();
-            $.ajax({
-                url: "{{ url('mahasiswas') }}",
-                method: "POST",
-                data: $(this).serialize(),
-                dataType: 'json',
-                success:function(data){
-                    $('.form-message').html('');
-                    //$('#modal_mahasiswa').modal('hide');
-                    if(data.status){
-                        $('.form-message').html('<span class="alert alert-success" style="width: 100%">' + data.message + '</span>');
-                        $('#form_mahasiswa')[0].reset();
-                        dataMahasiswa.ajax.reload();
-                    }else{
-                        $('.form-message').html('<span class="alert alert-danger" style="width: 100%">' + data.message + '</span>');
-                        alert('error');
-                    }
+    $('#form_mahasiswa').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: "POST",
+                    data: $(this).serialize(),
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('.form-message').html('');
+                        if (data.status) {
+                            $('.form-message').html(
+                                '<span class="alert alert-success" style="width: 100%">' +
+                                data.message + '</span>');
+                            $('#form_mahasiswa')[0].reset();
+                            dataMahasiswa.ajax.reload();
+                            $('#form_mahasiswa').attr('action', '{{ url('mahasiswas') }}');
+                            $('#form_mahasiswa').find('input[name="_method"]').remove();
+                        } else {
+                            $('.form-message').html(
+                                '<span class="alert alert-danger" style="width: 100%">' +
+                                data.message + '</span>');
+                            alert('error');
+                        }
 
-                }
-            });
-        });
+                        if (data.modal_close) {
+                            $('.form-message').html('');
+                            $('#modal_mahasiswa').modal('hide');
+                        }
+
+                    }
+                });
+            });
 </script>  
 @endpush

@@ -6,11 +6,11 @@ use App\Models\Kelas;
 use App\Models\Mahasiswa;
 use App\Models\mahasiswa_matakuliah;
 use App\Models\MahasiswaModel;
-
+use Illuminate\Support\Facades\Validator;
 use Database\Seeders\MahasiswaSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+
 use Yajra\DataTables\DataTables;
 use PDF;
 use PhpParser\Node\Stmt\Return_;
@@ -209,11 +209,10 @@ class MahasiswaController extends Controller
         //MahasiswaModel::where('id','=',$id)->delete();
         //return redirect('mahasiswas')
         //->with('success','Mahasiswa Berhasil Dihapus');
-        $mahasiwas = MahasiswaModel::where('id', $id)->delete();
+        MahasiswaModel::where('id', $id)->delete();
         return response()->json([
-            'status' => ($mahasiwas),
-            'message' => ($mahasiwas)? 'Data berhasil dihapus' : 'Data gagal dihapus',
-            'data' => null
+            'message' => 'Data berhasil dihapus',
+            'status' => true
         ]);
     }
     public function cetak_pdf($id){
