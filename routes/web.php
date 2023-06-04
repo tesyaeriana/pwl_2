@@ -116,6 +116,8 @@ Route::middleware(['auth']) ->group(function(){
     Route::resource('/hobi',HobiController::class)->parameter('hobi','id');
     Route::get('/keluarga',[KeluargaController::class,'index']);
     Route::resource('/matakuliah',MataKuliahController::class)->parameter('matakuliah','id');
+    Route::post('mahasiswas/data', [MahasiswaController::class, 'data']);
+    Route::post('/mahasiswa/delete/{id}', [MahasiswaController::class, 'destroy']);
     Route::resource('/mahasiswas', MahasiswaController::class)->parameter('mahasiswas','id');
     Route::get('cari',[MahasiswaController::class, 'cari']);
     Route::get('cariHobi',[HobiController::class, 'cari']);

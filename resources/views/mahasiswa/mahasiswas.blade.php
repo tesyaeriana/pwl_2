@@ -29,8 +29,6 @@
                         <th>No</th>
                         <th>Nim</th>
                         <th>Nama</th>
-                        <th>Foto</th>
-                        <th>Jenis Kelamin</th>
                         <th>No. HP</th>
                         <th>Action</th>
                     </tr>
@@ -112,10 +110,101 @@
         </div>
         </form>
     </div>
+    <div class="modal fade" id="modal_show" style="display: none;" aria-hidden="true">
+       
+        <div class="modal-dialog modal-">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Default Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-message"></div>
+                    <div class="form-group required row mb-2">
+                        <label class="col-sm-2 control-label col-form-label">NIM</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="show_nim" name="nim" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group required row mb-2">
+                        <label class="col-sm-2 control-label col-form-label">Nama</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="show_nama" name="nama" value="" />
+                        </div>
+                    </div>
+                   
+                    <div class="form-group required row mb-2">
+                        <label class="col-sm-2 control-label col-form-label">Hp</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="show_hp" name="hp" value="" />
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  
+            </div>
+        </div>
+      
+    </div>
 </section>
 @endsection
 @push('js')
 <script>
+     function updateData(th){
+        $('#modal_mahasiswa').modal('show');
+        $('#modal_mahasiswa .modal-title').html('Edit Data Mahasiswa');
+        $('#modal_mahasiswa #nim').val($(th).data('nim'));
+        $('#modal_mahasiswa #nama').val($(th).data('nama'));
+        $('#modal_mahasiswa #hp').val($(th).data('hp'));
+        $('#modal_mahasiswa #form_mahasiswa').attr('action', $(th).data('url'));
+        $('#modal_mahasiswa #form_mahasiswa').append('<input type="hidden" name="_method" value="PUT">');
+    }
+    function showData(element) {
+        // $(element).attr('href');
+        // console.log(element);
+        // console.log($(element));
+        $.ajax({
+            url: '{{  url('mahasiswas') }}'+ '/' + element,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+            
+            $('#modal_show').modal('show');
+            
+            $('#show_nim').val(data.nim);
+            $('#show_nama').val(data.nama);
+            $('#show_hp').val(data.hp);
+            },
+            error: function() {
+            alert('Error occurred while retrieving data.');
+            }
+        });
+    }
+    function deleteData(element) {
+        if (!confirm("Are you sure?")) {
+            return false;
+        }
+        
+        $.ajax({
+            url: '{{  url('mahasiswas/delete') }}'+ '/' + element,
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(data) {
+                alert(data.message);
+                location.reload();
+            },
+            error: function() {
+                alert('Error occurred while deleting data.');
+            }
+        });
+    }
     $(document).ready(function (){
         var dataMahasiswa = $('#data_mahasiswa').DataTable({
             processing:true,
@@ -129,17 +218,13 @@
                 {data:'no',searchable:false,sortable:false},
                 {data:'nim',name:'nim',searchable:true,sortable:false},
                 {data:'nama',name:'nama',searchable:true,sortable:true},
-                {data: 'foto',foto:'foto',searchable:false,sortable:false},
-                {data: 'jk',jk:'jk',searchable:false,sortable:false},
+               
                 {data:'hp',name:'hp',searchable:true,sortable:false},
                 {data:'id',name:'id',searchable:false,sortable:false,
-                    render: function(data, row){
-                        var btn = `<a href="{{ url('/mahasiswas/')}}+data+/edit" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i> </a> 
-                                  <a href="{{ url('/mahasiswas/') }} " class="btn btn-xs btn-info"><i class="fa fa-list"></i></a> 
-                                  <form method="POST" action="{{ url('/mahasiswas/') }}+data+">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></button>
-                                    </form>`;
+                render: function(data, type, row, meta){
+                        var btn = `<button data-url="{{ url('/mahasiswas')}}/`+data+`" class="btn btn-xs btn-warning" onclick="updateData(this)" data-id="`+row.id+`" data-nim="`+row.nim+`" data-nama="`+row.nama+`" data-hp="`+row.hp+`"><i class="fa fa-edit"></i></button>` +
+                        `<button href="{{ url('/mahasiswas/') }}/`+data+` " onclick="showData(`+data+`)" class="btn btn-xs btn-info"><i class="fa fa-list"></i></button>` +
+                                  `<button class="btn btn-xs btn-danger" onclick="deleteData(`+data+`)"><i class="fa fa-trash"></i> </button>`;
                         return btn;
                     }
                 }
